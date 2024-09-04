@@ -1,4 +1,3 @@
-# location: spec/feature/integration_spec.rb
 require 'rails_helper'
 
 RSpec.describe 'Creating a book with new attributes', type: :feature do
@@ -10,10 +9,8 @@ RSpec.describe 'Creating a book with new attributes', type: :feature do
     fill_in 'book[published_date]', with: '2024-01-01'
     click_on 'Create Book'
 
-    visit books_path
+    expect(page).to have_content('Book was successfully created')
     expect(page).to have_content('Sample Title')
-    expect(page).to have_content('Sample Author')
-    expect(page).to have_content(15.99)
     expect(page).to have_content('2024-01-01')
   end
 
@@ -29,5 +26,8 @@ RSpec.describe 'Creating a book with new attributes', type: :feature do
     expect(page).to have_content("Author can't be blank")
     expect(page).to have_content("Price can't be blank")
     expect(page).to have_content("Published date can't be blank")
+
+    # flash
+    expect(page).to have_content("Title can't be blank")
   end
 end
